@@ -16,7 +16,7 @@ namespace Client
 
 			// This is normally where some business logic would occur
 
-			throw new Exception("BOOM!!!!!");
+			//throw new Exception("BOOM!!!!!");
 
 			var orderPlaced = new OrderPlaced
 			{

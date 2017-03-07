@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using NServiceBus;
 
 namespace Sales
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			AsyncMain().GetAwaiter().GetResult();
 		}
 
-		static async Task AsyncMain()
+		private static async Task AsyncMain()
 		{
 			Console.Title = "Sales";
 
@@ -30,15 +27,13 @@ namespace Sales
 			var recoverability = endpointConfiguration.Recoverability();
 
 			recoverability.Immediate(
-				immediate =>
-				{
-					immediate.NumberOfRetries(1);
-				});
+				immediate => { immediate.NumberOfRetries(1); });
 
 			recoverability.Delayed(
 				delayed =>
 				{
-					delayed.NumberOfRetries(2);
+					delayed.NumberOfRetries(3);
+					delayed.TimeIncrease(TimeSpan.FromSeconds(3));
 				});
 
 			var endpointInstance = await Endpoint.Start(endpointConfiguration)
